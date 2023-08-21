@@ -10,6 +10,7 @@ const Footer = () => {
                 <Col className='text-center py-3'>
                     <p>
                         ProShop &copy; {currentYear}
+                        {/* 添加版权符号 */}
                     </p>
                 </Col>
             </Row>
