@@ -1,14 +1,29 @@
 import React from 'react'
-import products  from '../products'
-import {useParams } from 'react-router-dom'
+import axios from 'axios'
+import {useEffect,useState } from 'react'
+import { useParams} from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import {Row, Col, Image, ListGroup, Card, Button} from 'react-bootstrap'
 import Rating from '../components/Rating'
+import originalProducts from '../products'  // Renamed
 
 const ProductScreen = () => {
+    const [product, setProduct] = useState({})
     const {id:productId} =useParams()
-    const product = products.find((p)=>p._id===productId)
-    //it means find in the products.json 
+    useEffect(()=>{
+        const fetchProduct = async()=>{
+            try{
+                const {data} = await axios.get(`http://localhost:5001/api/products/${productId}`)
+            setProduct(data);
+            }
+            catch(error){
+                console.error("There was an error fetching the data", error);
+                setProduct(originalProducts.find(p => p._id === productId) || {});
+
+            }  
+        }
+        fetchProduct();
+    },[productId])
 
   return (
     <>
