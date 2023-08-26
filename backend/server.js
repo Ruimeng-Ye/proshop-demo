@@ -6,6 +6,7 @@ import products from "./data/products.js";
 //.js一定要加
 import connectDB from "./config/db.js";
 import productRoutes from "./routes/productRoutes.js";
+import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
 connectDB(); //connect to MongoDB
 
@@ -22,4 +23,6 @@ app.get("/", (req, res) => {
 app.use("/api/products", productRoutes);
 //any time when we hit the url like /api/products. it will return the productRoutes. No matter what is after the /api/products
 
+app.use(notFound);
+app.use(errorHandler);
 app.listen(port, () => console.log(`Server running on port ${port}`));
